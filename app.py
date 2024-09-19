@@ -47,7 +47,6 @@ if df_selection.empty:
     st.warning("Nenhum dado disponível com base nas configurações de filtro atuais!")
     st.stop()
 
-
 # Título da página
 st.title(":bar_chart: Dashboard de Vendas")
 st.markdown("##")
@@ -57,48 +56,11 @@ total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
-# Verificando os KPIs
-st.write("Total de Vendas:", total_sales)
-st.write("Satisfação Média:", average_satisfaction)
-st.write("Média de Atendimento:", average_customer_service)
-
-left_column, middle_column, right_column = st.columns(3)
-
-# Gráficos de KPIs
-def create_indicator(title, value, prefix=""):
-    fig = go.Figure()
-    fig.add_trace(go.Indicator(
-        mode="number",
-        value=value,
-        title={"text": title},
-        number={"prefix": prefix},
-        domain={"x": [0.1, 0.9], "y": [0.2, 0.8]}
-    ))
-    fig.update_layout(height=200, margin=dict(l=20, r=20, t=20, b=20), plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Arial, sans-serif", size=12, color="white"))
-    return fig
-
-# Gráficos de KPIs
-with left_column:
-    st.subheader("Visão Geral das Vendas")
-    st.plotly_chart(create_indicator("Total de Vendas", total_sales, "R$ "), use_container_width=True)
-
-with middle_column:
-    st.subheader("Satisfação Média")
-    fig_satisfaction = go.Figure()
-    fig_satisfaction.add_trace(go.Indicator(
-        mode="gauge+number",
-        value=average_satisfaction,
-        title={"text": "Satisfação Média"},
-        gauge={"axis": {"range": [0, 10]}, "bar": {"color": "orange"},
-               "steps": [{"range": [0, 4], "color": "red"}, {"range": [4, 7], "color": "yellow"}, {"range": [7, 10], "color": "green"}]},
-        domain={"x": [0.1, 0.9], "y": [0.2, 0.8]}
-    ))
-    fig_satisfaction.update_layout(height=200, margin=dict(l=20, r=20, t=20, b=20), plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Arial, sans-serif", size=12, color="white"))
-    st.plotly_chart(fig_satisfaction, use_container_width=True)
-
-with right_column:
-    st.subheader("Atendimento ao Cliente (Média)")
-    st.plotly_chart(create_indicator("Média de Atendimento", average_customer_service), use_container_width=True)
+# Exibir os KPIs
+st.subheader("Resultados dos KPIs")
+st.write("**Total de Vendas:** R$ ", total_sales)
+st.write("**Satisfação Média:** ", average_satisfaction)
+st.write("**Média de Atendimento:** ", average_customer_service)
 
 st.markdown("---")
 
@@ -171,9 +133,9 @@ st.plotly_chart(generate_chart(chart_type), use_container_width=True)
 
 # Botão para mostrar/ocultar tabela
 if st.button("Mostrar Tabela Excel"):
-    st.session_state.show_table = not st.session_state.show_table
+    st.session_state.show_table = not st.session_state.get("show_table", False)
 
-if st.session_state.show_table:
+if st.session_state.get("show_table", False):
     st.write(df_selection)
 
 # Estilo para esconder a interface padrão do Streamlit
