@@ -61,15 +61,15 @@ left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
     st.markdown(f"<h1 style='text-align: center; color: white;'>{total_sales}</h1>", unsafe_allow_html=True)
-    st.subheader("Total de Vendas")
+    st.markdown("<h4 style='text-align: center; color: white;'>Total de Vendas</h4>", unsafe_allow_html=True)
 
 with middle_column:
     st.markdown(f"<h1 style='text-align: center; color: white;'>{average_satisfaction}</h1>", unsafe_allow_html=True)
-    st.subheader("Satisfação Média")
+    st.markdown("<h4 style='text-align: center; color: white;'>Satisfação Média</h4>", unsafe_allow_html=True)
 
 with right_column:
     st.markdown(f"<h1 style='text-align: center; color: white;'>{average_customer_service}</h1>", unsafe_allow_html=True)
-    st.subheader("Média de Atendimento")
+    st.markdown("<h4 style='text-align: center; color: white;'>Média de Atendimento</h4>", unsafe_allow_html=True)
 
 st.markdown("---")
 
