@@ -60,15 +60,15 @@ average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
-    st.markdown("<h1 style='text-align: center; color: white; font-size: 30px;'>{}</h1>".format(total_sales), unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: white; font-size: 60px;'>{}</h1>".format(total_sales), unsafe_allow_html=True)
     st.markdown("<h4 style='text-align: center; color: white;'>Total de Vendas</h4>", unsafe_allow_html=True)
 
 with middle_column:
-    st.markdown("<h1 style='text-align: center; color: white; font-size: 30px;'>{}</h1>".format(average_satisfaction), unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: white; font-size: 60px;'>{}</h1>".format(average_satisfaction), unsafe_allow_html=True)
     st.markdown("<h4 style='text-align: center; color: white;'>Satisfação Média</h4>", unsafe_allow_html=True)
 
 with right_column:
-    st.markdown("<h1 style='text-align: center; color: white; font-size: 30px;'>{}</h1>".format(average_customer_service), unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: white; font-size: 60px;'>{}</h1>".format(average_customer_service), unsafe_allow_html=True)
     st.markdown("<h4 style='text-align: center; color: white;'>Média de Atendimento</h4>", unsafe_allow_html=True)
 
 st.markdown("---")
