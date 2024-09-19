@@ -47,6 +47,9 @@ if df_selection.empty:
     st.warning("Nenhum dado disponível com base nas configurações de filtro atuais!")
     st.stop()
 
+# Verificando os dados filtrados
+st.write("DataFrame filtrado:", df_selection)
+
 # Inicializa o estado do botão para mostrar tabela
 if 'show_table' not in st.session_state:
     st.session_state.show_table = False
@@ -59,6 +62,11 @@ st.markdown("##")
 total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
+
+# Verificando os KPIs
+st.write("Total de Vendas:", total_sales)
+st.write("Satisfação Média:", average_satisfaction)
+st.write("Média de Atendimento:", average_customer_service)
 
 left_column, middle_column, right_column = st.columns(3)
 
@@ -173,8 +181,6 @@ if st.button("Mostrar Tabela Excel"):
 
 if st.session_state.show_table:
     st.write(df_selection)
-
-
 
 # Estilo para esconder a interface padrão do Streamlit
 hide_st_style = """
