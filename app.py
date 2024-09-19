@@ -56,6 +56,24 @@ total_sales = int(df_selection["Vendas Realizadas"].sum()) if not df_selection["
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1) if not df_selection["Pesquisa de Satisfação"].isnull().all() else 0
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2) if not df_selection["Atendimentos no Dia"].isnull().all() else 0
 
+# Gráficos de KPIs
+def create_indicator(title, value, prefix=""):
+    fig = go.Figure()
+    fig.add_trace(go.Indicator(
+        mode="number",
+        value=value,
+        title={"text": title},
+        number={"prefix": prefix},
+        domain={"x": [0.1, 0.9], "y": [0.2, 0.8]}
+    ))
+    fig.update_layout(height=200, margin=dict(l=20, r=20, t=20, b=20), plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Arial, sans-serif", size=12, color="white"))
+    return fig
+
+# Gráficos de KPIs
+with left_column:
+    st.subheader("Visão Geral das Vendas")
+    st.plotly_chart(create_indicator("Total de Vendas", total_sales, " "), use_container_width=True)
+
 # Colunas para os gráficos
 left_column, middle_column, right_column = st.columns(3)
 
