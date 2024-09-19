@@ -9,13 +9,13 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 @st.cache_data
 def get_data_from_excel():
     df = pd.read_excel(
-        io="Base de Dados.xlsx",  # Atualize para o caminho correto no seu ambiente
+        io="Base de Dados Alan.xlsx",  # Atualize para o caminho correto no seu ambiente
         engine="openpyxl",
         sheet_name="Sheet1"
     )
     
     # Filtra as colunas necessárias
-    df = df[[
+    df = df[[ 
         "Unidade", "Operador", "Mês", "Leads Recebidos", "Atendimentos no Dia",
         "Ações Realizadas", "Ações Planejadas", "Resgates de Clientes",
         "Pesquisa de Satisfação", "Meta de Vendas", "Vendas Realizadas",
@@ -56,20 +56,20 @@ total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
-# Exibir os KPIs em colunas com fonte grande
+# Exibir os KPIs em colunas
 left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
-    st.markdown("<h1 style='text-align: center; color: white; font-size: 60px;'>{}</h1>".format(total_sales), unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: center; color: white;'>Total de Vendas</h4>", unsafe_allow_html=True)
+    st.subheader("Total de Vendas")
+    st.markdown(f"<h1 style='text-align: center; color: white;'>{total_sales}</h1>", unsafe_allow_html=True)
 
 with middle_column:
-    st.markdown("<h1 style='text-align: center; color: white; font-size: 60px;'>{}</h1>".format(average_satisfaction), unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: center; color: white;'>Satisfação Média</h4>", unsafe_allow_html=True)
+    st.subheader("Satisfação Média")
+    st.markdown(f"<h1 style='text-align: center; color: white;'>{average_satisfaction}</h1>", unsafe_allow_html=True)
 
 with right_column:
-    st.markdown("<h1 style='text-align: center; color: white; font-size: 60px;'>{}</h1>".format(average_customer_service), unsafe_allow_html=True)
-    st.markdown("<h4 style='text-align: center; color: white;'>Média de Atendimento</h4>", unsafe_allow_html=True)
+    st.subheader("Média de Atendimento")
+    st.markdown(f"<h1 style='text-align: center; color: white;'>{average_customer_service}</h1>", unsafe_allow_html=True)
 
 st.markdown("---")
 
@@ -141,9 +141,6 @@ def generate_chart(chart_type):
 st.plotly_chart(generate_chart(chart_type), use_container_width=True)
 
 # Botão para mostrar/ocultar tabela
-if "show_table" not in st.session_state:
-    st.session_state.show_table = False
-
 if st.button("Mostrar Tabela Excel"):
     st.session_state.show_table = not st.session_state.show_table
 
