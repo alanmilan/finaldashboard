@@ -9,7 +9,7 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 @st.cache_data
 def get_data_from_excel():
     df = pd.read_excel(
-        io="Base de Dados Alan.xlsx",  # Atualize para o caminho correto no seu ambiente
+        io="Base de Dados.xlsx",  # Atualize para o caminho correto no seu ambiente
         engine="openpyxl",
         sheet_name="Sheet1"
     )
