@@ -56,11 +56,20 @@ total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
-# Exibir os KPIs
-st.subheader("Resultados dos KPIs")
-st.write("**Total de Vendas:** R$ ", total_sales)
-st.write("**Satisfação Média:** ", average_satisfaction)
-st.write("**Média de Atendimento:** ", average_customer_service)
+# Exibir os KPIs em colunas
+left_column, middle_column, right_column = st.columns(3)
+
+with left_column:
+    st.subheader("Total de Vendas")
+    st.write("R$ ", total_sales)
+
+with middle_column:
+    st.subheader("Satisfação Média")
+    st.write(average_satisfaction)
+
+with right_column:
+    st.subheader("Média de Atendimento")
+    st.write(average_customer_service)
 
 st.markdown("---")
 
@@ -133,9 +142,9 @@ st.plotly_chart(generate_chart(chart_type), use_container_width=True)
 
 # Botão para mostrar/ocultar tabela
 if st.button("Mostrar Tabela Excel"):
-    st.session_state.show_table = not st.session_state.get("show_table", False)
+    st.session_state.show_table = not st.session_state.show_table
 
-if st.session_state.get("show_table", False):
+if st.session_state.show_table:
     st.write(df_selection)
 
 # Estilo para esconder a interface padrão do Streamlit
