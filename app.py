@@ -55,17 +55,15 @@ st.markdown("##")
 total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
-
-# Novos KPIs
 meta_vendas = df_selection["Meta de Vendas"].sum()
 insucessos = df_selection["Insucessos"].sum()
 acoes_realizadas = df_selection["Ações Realizadas"].sum()
 acoes_planejadas = df_selection["Ações Planejadas"].sum()
 resgates_clientes = df_selection["Resgates de Clientes"].sum()
 
-# Cálculos dos novos KPIs
+# Calculando os novos KPIs
 meta_por_insucessos = meta_vendas / insucessos if insucessos > 0 else 0
-acoes_realizadas_planejadas = acoes_realizadas / acoes_planejadas if acoes_planejadas > 0 else 0
+acoes_realizadas_por_planejadas = acoes_realizadas / acoes_planejadas if acoes_planejadas > 0 else 0
 resgates_por_vendas = resgates_clientes / total_sales if total_sales > 0 else 0
 
 # Exibir os KPIs em colunas
@@ -73,7 +71,7 @@ left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
     st.subheader("Total de Vendas")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{total_sales}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: black;'>{total_sales:,.0f}</h1>", unsafe_allow_html=True)
 
 with middle_column:
     st.subheader("Satisfação Média")
@@ -83,20 +81,19 @@ with right_column:
     st.subheader("Média de Atendimento")
     st.markdown(f"<h1 style='text-align: center; color: black;'>{average_customer_service}</h1>", unsafe_allow_html=True)
 
+# Novos KPIs
 st.markdown("---")
+new_left_column, new_middle_column, new_right_column = st.columns(3)
 
-# Exibir os novos KPIs em colunas
-left_column, middle_column, right_column = st.columns(3)
-
-with left_column:
+with new_left_column:
     st.subheader("Meta de Vendas por Insucessos")
     st.markdown(f"<h1 style='text-align: center; color: black;'>{meta_por_insucessos:.2f}</h1>", unsafe_allow_html=True)
 
-with middle_column:
-    st.subheader("Ações Realizadas / Planejadas")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{acoes_realizadas_planejadas:.2f}</h1>", unsafe_allow_html=True)
+with new_middle_column:
+    st.subheader("Ações Realizadas / Ações Planejadas")
+    st.markdown(f"<h1 style='text-align: center; color: black;'>{acoes_realizadas_por_planejadas:.2f}</h1>", unsafe_allow_html=True)
 
-with right_column:
+with new_right_column:
     st.subheader("Resgates de Clientes por Vendas Totais")
     st.markdown(f"<h1 style='text-align: center; color: black;'>{resgates_por_vendas:.2f}</h1>", unsafe_allow_html=True)
 
@@ -117,63 +114,67 @@ def generate_chart(chart_type):
     if chart_type == "Vendas por Unidade":
         sales_by_unit = df_selection.groupby("Unidade")["Vendas Realizadas"].sum()
         fig.add_trace(go.Bar(x=sales_by_unit.values, y=sales_by_unit.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Vendas por Unidade</b>", xaxis_title="Vendas Realizadas", yaxis_title="Unidade", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Vendas por Unidade</b>", xaxis_title="Vendas Realizadas", yaxis_title="Unidade", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
     
     elif chart_type == "Vendas por Mês":
         sales_by_month = df_selection.groupby("Mês")["Vendas Realizadas"].sum()
         fig.add_trace(go.Bar(x=sales_by_month.values, y=sales_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Vendas por Mês</b>", xaxis_title="Vendas Realizadas", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Vendas por Mês</b>", xaxis_title="Vendas Realizadas", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
     
     elif chart_type == "Leads Recebidos por Mês":
         leads_by_month = df_selection.groupby("Mês")["Leads Recebidos"].sum()
         fig.add_trace(go.Bar(x=leads_by_month.values, y=leads_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Leads Recebidos por Mês</b>", xaxis_title="Leads Recebidos", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Leads Recebidos por Mês</b>", xaxis_title="Leads Recebidos", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     elif chart_type == "Atendimentos por Mês":
         atendimentos_by_month = df_selection.groupby("Mês")["Atendimentos no Dia"].sum()
         fig.add_trace(go.Bar(x=atendimentos_by_month.values, y=atendimentos_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Atendimentos por Mês</b>", xaxis_title="Atendimentos", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Atendimentos por Mês</b>", xaxis_title="Atendimentos", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
     
     elif chart_type == "Ações Realizadas por Mês":
         acoes_by_month = df_selection.groupby("Mês")["Ações Realizadas"].sum()
         fig.add_trace(go.Bar(x=acoes_by_month.values, y=acoes_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Ações Realizadas por Mês</b>", xaxis_title="Ações Realizadas", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Ações Realizadas por Mês</b>", xaxis_title="Ações Realizadas", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     elif chart_type == "Ações Planejadas por Mês":
         acoes_planejadas_by_month = df_selection.groupby("Mês")["Ações Planejadas"].sum()
         fig.add_trace(go.Bar(x=acoes_planejadas_by_month.values, y=acoes_planejadas_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Ações Planejadas por Mês</b>", xaxis_title="Ações Planejadas", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Ações Planejadas por Mês</b>", xaxis_title="Ações Planejadas", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     elif chart_type == "Resgate de clientes":
         resgates_by_month = df_selection.groupby("Mês")["Resgates de Clientes"].sum()
         fig.add_trace(go.Bar(x=resgates_by_month.values, y=resgates_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Resgates de Clientes</b>", xaxis_title="Resgates", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Resgates de Clientes</b>", xaxis_title="Resgates", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     elif chart_type == "Pesquisa de satisfação":
         satisfaction_by_month = df_selection.groupby("Mês")["Pesquisa de Satisfação"].mean()
         fig.add_trace(go.Bar(x=satisfaction_by_month.values, y=satisfaction_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Pesquisa de Satisfação</b>", xaxis_title="Satisfação Média", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Pesquisa de Satisfação</b>", xaxis_title="Satisfação Média", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     elif chart_type == "Insucessos":
         insucessos_by_month = df_selection.groupby("Mês")["Insucessos"].sum()
         fig.add_trace(go.Bar(x=insucessos_by_month.values, y=insucessos_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Insucessos</b>", xaxis_title="Total de Insucessos", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Insucessos</b>", xaxis_title="Total de Insucessos", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     elif chart_type == "Tempo Médio de atendimento":
         tempo_medio_by_month = df_selection.groupby("Mês")["Tempo Médio de Atendimento (min)"].mean()
         fig.add_trace(go.Bar(x=tempo_medio_by_month.values, y=tempo_medio_by_month.index, orientation='h', marker_color="#FF6600"))
-        fig.update_layout(title="<b>Tempo Médio de Atendimento</b>", xaxis_title="Tempo (min)", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="black"))
+        fig.update_layout(title="<b>Tempo Médio de Atendimento</b>", xaxis_title="Tempo (min)", yaxis_title="Mês", plot_bgcolor="rgba(0,0,0,0)", font=dict(color="white"))
 
     return fig
 
 # Exibir gráfico
 st.plotly_chart(generate_chart(chart_type), use_container_width=True)
 
+# Inicializa o show_table se não estiver definido
+if 'show_table' not in st.session_state:
+    st.session_state.show_table = False
+
 # Botão para mostrar/ocultar tabela
 if st.button("Mostrar Tabela Excel"):
     st.session_state.show_table = not st.session_state.show_table
 
-if st.session_state.get("show_table", False):
+if st.session_state.show_table:
     st.write(df_selection)
 
 # Estilo para esconder a interface padrão do Streamlit
