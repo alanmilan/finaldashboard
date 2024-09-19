@@ -69,17 +69,20 @@ resgates_por_vendas = resgates_clientes / total_sales if total_sales > 0 else 0
 # Exibir os KPIs em colunas
 left_column, middle_column, right_column = st.columns(3)
 
+# Exibir os KPIs em colunas
+left_column, middle_column, right_column = st.columns(3)
+
 with left_column:
     st.subheader("Total de Vendas")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{total_sales:,.0f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: orange;'>{total_sales:,.0f}</h1>", unsafe_allow_html=True)
 
 with middle_column:
     st.subheader("Satisfação Média")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{average_satisfaction}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: orange;'>{average_satisfaction}</h1>", unsafe_allow_html=True)
 
 with right_column:
     st.subheader("Média de Atendimento")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{average_customer_service}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: orange;'>{average_customer_service}</h1>", unsafe_allow_html=True)
 
 # Novos KPIs
 st.markdown("---")
@@ -87,15 +90,16 @@ new_left_column, new_middle_column, new_right_column = st.columns(3)
 
 with new_left_column:
     st.subheader("Meta de Vendas por Insucessos")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{meta_por_insucessos:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: orange;'>{meta_por_insucessos:.2f}</h1>", unsafe_allow_html=True)
 
 with new_middle_column:
     st.subheader("Ações Realizadas / Ações Planejadas")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{acoes_realizadas_por_planejadas:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: orange;'>{acoes_realizadas_por_planejadas:.2f}</h1>", unsafe_allow_html=True)
 
 with new_right_column:
     st.subheader("Resgates de Clientes por Vendas Totais")
-    st.markdown(f"<h1 style='text-align: center; color: black;'>{resgates_por_vendas:.2f}</h1>", unsafe_allow_html=True)
+    st.markdown(f"<h1 style='text-align: center; color: orange;'>{resgates_por_vendas:.2f}</h1>", unsafe_allow_html=True)
+
 
 st.markdown("---")
 
