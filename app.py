@@ -47,19 +47,16 @@ if df_selection.empty:
     st.warning("Nenhum dado disponível com base nas configurações de filtro atuais!")
     st.stop()
 
-# Inicializa o estado do botão para mostrar tabela
-if 'show_table' not in st.session_state:
-    st.session_state.show_table = False
-
 # Título da página
 st.title(":bar_chart: Dashboard de Vendas")
 st.markdown("##")
 
 # KPIs principais
-total_sales = int(df_selection["Vendas Realizadas"].sum())
-average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
-average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
+total_sales = int(df_selection["Vendas Realizadas"].sum()) if not df_selection["Vendas Realizadas"].isnull().all() else 0
+average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1) if not df_selection["Pesquisa de Satisfação"].isnull().all() else 0
+average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2) if not df_selection["Atendimentos no Dia"].isnull().all() else 0
 
+# Colunas para os gráficos
 left_column, middle_column, right_column = st.columns(3)
 
 # Gráficos de KPIs
