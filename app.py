@@ -9,7 +9,7 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 @st.cache_data
 def get_data_from_excel():
     df = pd.read_excel(
-        io="Base de Dados.xlsx",  # Atualize para o caminho correto no seu ambiente
+        io="Base de Dados Alan.xlsx",  # Atualize para o caminho correto no seu ambiente
         engine="openpyxl",
         sheet_name="Sheet1"
     )
@@ -56,6 +56,18 @@ total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
+# Novos KPIs
+meta_vendas = df_selection["Meta de Vendas"].sum()
+insucessos = df_selection["Insucessos"].sum()
+acoes_realizadas = df_selection["Ações Realizadas"].sum()
+acoes_planejadas = df_selection["Ações Planejadas"].sum()
+resgates_clientes = df_selection["Resgates de Clientes"].sum()
+
+# Cálculos dos novos KPIs
+meta_por_insucessos = meta_vendas / insucessos if insucessos > 0 else 0
+acoes_realizadas_planejadas = acoes_realizadas / acoes_planejadas if acoes_planejadas > 0 else 0
+resgates_por_vendas = resgates_clientes / total_sales if total_sales > 0 else 0
+
 # Exibir os KPIs em colunas
 left_column, middle_column, right_column = st.columns(3)
 
@@ -70,6 +82,23 @@ with middle_column:
 with right_column:
     st.subheader("Média de Atendimento")
     st.markdown(f"<h1 style='text-align: center; color: black;'>{average_customer_service}</h1>", unsafe_allow_html=True)
+
+st.markdown("---")
+
+# Exibir os novos KPIs em colunas
+left_column, middle_column, right_column = st.columns(3)
+
+with left_column:
+    st.subheader("Meta de Vendas por Insucessos")
+    st.markdown(f"<h1 style='text-align: center; color: black;'>{meta_por_insucessos:.2f}</h1>", unsafe_allow_html=True)
+
+with middle_column:
+    st.subheader("Ações Realizadas / Planejadas")
+    st.markdown(f"<h1 style='text-align: center; color: black;'>{acoes_realizadas_planejadas:.2f}</h1>", unsafe_allow_html=True)
+
+with right_column:
+    st.subheader("Resgates de Clientes por Vendas Totais")
+    st.markdown(f"<h1 style='text-align: center; color: black;'>{resgates_por_vendas:.2f}</h1>", unsafe_allow_html=True)
 
 st.markdown("---")
 
