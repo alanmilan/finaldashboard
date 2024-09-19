@@ -47,12 +47,6 @@ if df_selection.empty:
     st.warning("Nenhum dado disponível com base nas configurações de filtro atuais!")
     st.stop()
 
-# Verificando os dados filtrados
-st.write("DataFrame filtrado:", df_selection)
-
-# Inicializa o estado do botão para mostrar tabela
-if 'show_table' not in st.session_state:
-    st.session_state.show_table = False
 
 # Título da página
 st.title(":bar_chart: Dashboard de Vendas")
