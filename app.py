@@ -56,20 +56,20 @@ total_sales = int(df_selection["Vendas Realizadas"].sum())
 average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
 average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
-# Exibir os KPIs em colunas
+# Exibir os KPIs em colunas com fonte grande
 left_column, middle_column, right_column = st.columns(3)
 
 with left_column:
+    st.markdown(f"<h1 style='text-align: center; color: white;'>{total_sales}</h1>", unsafe_allow_html=True)
     st.subheader("Total de Vendas")
-    st.write("R$ ", total_sales)
 
 with middle_column:
+    st.markdown(f"<h1 style='text-align: center; color: white;'>{average_satisfaction}</h1>", unsafe_allow_html=True)
     st.subheader("Satisfação Média")
-    st.write(average_satisfaction)
 
 with right_column:
+    st.markdown(f"<h1 style='text-align: center; color: white;'>{average_customer_service}</h1>", unsafe_allow_html=True)
     st.subheader("Média de Atendimento")
-    st.write(average_customer_service)
 
 st.markdown("---")
 
@@ -141,6 +141,9 @@ def generate_chart(chart_type):
 st.plotly_chart(generate_chart(chart_type), use_container_width=True)
 
 # Botão para mostrar/ocultar tabela
+if "show_table" not in st.session_state:
+    st.session_state.show_table = False
+
 if st.button("Mostrar Tabela Excel"):
     st.session_state.show_table = not st.session_state.show_table
 
