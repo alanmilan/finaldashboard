@@ -8,8 +8,9 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 # Função para ler os dados do Excel
 @st.cache_data
 def get_data_from_excel():
+    # Usando caminho relativo
     df = pd.read_excel(
-        io="C:\\Users\\Alan Milan\\Documents\\testemil\\Base de Dados.xlsx",
+        io="Base de Dados.xlsx",  # ou "pasta/Base de Dados.xlsx" se estiver em uma subpasta
         engine="openpyxl",
         sheet_name="Sheet1"
     )
