@@ -9,7 +9,7 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 @st.cache_data
 def get_data_from_excel():
     df = pd.read_excel(
-        io="Base de Dados.xlsx",  # Atualize para o caminho correto no seu ambiente
+        io="Base de Dados Alan.xlsx",  # Atualize para o caminho correto no seu ambiente
         engine="openpyxl",
         sheet_name="Sheet1"
     )
@@ -174,28 +174,7 @@ if st.button("Mostrar Tabela Excel"):
 if st.session_state.show_table:
     st.write(df_selection)
 
-df_selection = df.loc[
-    (df["Unidade"].isin(unidade)) &
-    (df["Operador"].isin(operador)) &
-    (df["Mês"].isin(mes))
-]
 
-# Verifica se o dataframe está vazio
-if df_selection.empty:
-    st.warning("Nenhum dado disponível com base nas configurações de filtro atuais!")
-    st.stop()
-
-# Exibir o DataFrame filtrado para depuração
-st.write("DataFrame filtrado:", df_selection)
-
-# Inicializa o estado do botão para mostrar tabela
-if 'show_table' not in st.session_state:
-    st.session_state.show_table = False
-
-# KPIs principais
-total_sales = int(df_selection["Vendas Realizadas"].sum())
-average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
-average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
 # Estilo para esconder a interface padrão do Streamlit
 hide_st_style = """
