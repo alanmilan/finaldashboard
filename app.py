@@ -9,7 +9,7 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 @st.cache_data
 def get_data_from_excel():
     df = pd.read_excel(
-        io="Base de Dados.xlsx",  # Atualize para o caminho correto no seu ambiente
+        io="Base de Dados Alan.xlsx",  # Atualize para o caminho correto no seu ambiente
         engine="openpyxl",
         sheet_name="Sheet1"
     )
@@ -47,34 +47,19 @@ if df_selection.empty:
     st.warning("Nenhum dado disponível com base nas configurações de filtro atuais!")
     st.stop()
 
+# Inicializa o estado do botão para mostrar tabela
+if 'show_table' not in st.session_state:
+    st.session_state.show_table = False
+
 # Título da página
 st.title(":bar_chart: Dashboard de Vendas")
 st.markdown("##")
 
 # KPIs principais
-total_sales = int(df_selection["Vendas Realizadas"].sum()) if not df_selection["Vendas Realizadas"].isnull().all() else 0
-average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1) if not df_selection["Pesquisa de Satisfação"].isnull().all() else 0
-average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2) if not df_selection["Atendimentos no Dia"].isnull().all() else 0
+total_sales = int(df_selection["Vendas Realizadas"].sum())
+average_satisfaction = round(df_selection["Pesquisa de Satisfação"].mean(), 1)
+average_customer_service = round(df_selection["Atendimentos no Dia"].mean(), 2)
 
-# Gráficos de KPIs
-def create_indicator(title, value, prefix=""):
-    fig = go.Figure()
-    fig.add_trace(go.Indicator(
-        mode="number",
-        value=value,
-        title={"text": title},
-        number={"prefix": prefix},
-        domain={"x": [0.1, 0.9], "y": [0.2, 0.8]}
-    ))
-    fig.update_layout(height=200, margin=dict(l=20, r=20, t=20, b=20), plot_bgcolor="rgba(0,0,0,0)", font=dict(family="Arial, sans-serif", size=12, color="white"))
-    return fig
-
-# Gráficos de KPIs
-with left_column:
-    st.subheader("Visão Geral das Vendas")
-    st.plotly_chart(create_indicator("Total de Vendas", total_sales, " "), use_container_width=True)
-
-# Colunas para os gráficos
 left_column, middle_column, right_column = st.columns(3)
 
 # Gráficos de KPIs
@@ -92,7 +77,7 @@ def create_indicator(title, value, prefix=""):
 
 # Gráficos de KPIs
 with left_column:
-    st.subheader("Total de Vendas")
+    st.subheader("Visão Geral das Vendas")
     st.plotly_chart(create_indicator("Total de Vendas", total_sales, "R$ "), use_container_width=True)
 
 with middle_column:
@@ -181,6 +166,15 @@ def generate_chart(chart_type):
 
 # Exibir gráfico
 st.plotly_chart(generate_chart(chart_type), use_container_width=True)
+
+# Botão para mostrar/ocultar tabela
+if st.button("Mostrar Tabela Excel"):
+    st.session_state.show_table = not st.session_state.show_table
+
+if st.session_state.show_table:
+    st.write(df_selection)
+
+
 
 # Estilo para esconder a interface padrão do Streamlit
 hide_st_style = """
