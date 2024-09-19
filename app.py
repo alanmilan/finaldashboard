@@ -9,7 +9,7 @@ st.set_page_config(page_title="Dashboard de Vendas", page_icon=":bar_chart:", la
 @st.cache_data
 def get_data_from_excel():
     df = pd.read_excel(
-        io="Base de Dados.xlsx",  # Atualize para o caminho correto no seu ambiente
+        io="Base de Dados Alan.xlsx",  # Atualize para o caminho correto no seu ambiente
         engine="openpyxl",
         sheet_name="Sheet1"
     )
@@ -144,7 +144,7 @@ st.plotly_chart(generate_chart(chart_type), use_container_width=True)
 if st.button("Mostrar Tabela Excel"):
     st.session_state.show_table = not st.session_state.show_table
 
-if st.session_state.show_table:
+if st.session_state.get("show_table", False):
     st.write(df_selection)
 
 # Estilo para esconder a interface padrão do Streamlit
