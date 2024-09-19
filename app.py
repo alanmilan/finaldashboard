@@ -28,7 +28,7 @@ def get_data_from_excel():
 df = get_data_from_excel()
 
 # Adicionar o logo da empresa na barra lateral
-st.sidebar.image("C:\\Users\\Alan Milan\\Documents\\testemil\\logo.png", width=250)  # Ajuste o caminho e a largura conforme necessário
+st.sidebar.image("logo.png", width=250)  # Ajuste o caminho e a largura conforme necessário
 
 # Sidebar para filtros
 st.sidebar.header("Por favor, selecione os filtros:")
